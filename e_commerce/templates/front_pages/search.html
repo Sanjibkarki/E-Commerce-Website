@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+     
+{% for i in results %}
+<div class="col-xs-3 col-sm-3 col-md-3 set-grid">
+    <div class="card" style="width: 16rem;">
+       
+        <img src="/media/{{i.image}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div class="row">
+                <div class="col"><a href="{% url 'product_detail' i.product_name %}" class="card-title" id="product_name_{{i.id}}_1">{{i.product_name}}</a></div>
+                <div class="col" style="text-align: right; color: yellow;"  id = "product_price_{{i.id}}_1">{{i.price}}</div>
+            </div>
+            
+            <div class="box" id="review">
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-heart"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+    
+{% endblock %}
+   
+

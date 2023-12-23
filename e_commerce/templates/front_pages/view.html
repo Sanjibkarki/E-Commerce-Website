@@ -39,7 +39,7 @@ Your Cart
             
             document.getElementById("text").textContent = "Your cart is Empty"
         }
-        const items = [];
+        items = [];
         for (let i = 0; i < number; i++) {
             const key = localStorage.key(i);
             const json = JSON.parse(localStorage.getItem(key));
@@ -50,12 +50,13 @@ Your Cart
         items.sort((a, b) => a.position - b.position);
     
         document.getElementById('click').addEventListener('click',()=>{
-            
-            for ( const i of requestData){
-                fetch('http://127.0.0.1:8000/api/users/', {
+            var token = "{{token}}";
+            for ( let i of requestData){
+                fetch('http://127.0.0.1:8000/api/create/', {
                     credentials: "same-origin",
                     method : 'POST',
                     headers: { 
+                        "Authorization": 'Bearer '+token,
                         "Accept": "application/json",
                         'Content-Type': 'application/json',   
                         "X-CSRFToken": getCookie("csrftoken"),  
@@ -65,6 +66,7 @@ Your Cart
                 
             }
             alert("Thank you for visiting us!!")
+            window.location.href = "http://127.0.0.1:8000"
             localStorage.clear()
         })
         function getCookie(name) {
@@ -83,7 +85,7 @@ Your Cart
             return cookieValue;
         }
     
-        let i =0;
+        let a =0;
     
         const requestData = []
         for (const item of items) {
@@ -112,7 +114,7 @@ Your Cart
             btn.textContent = "cancel";
             td5.appendChild(btn)
             th.setAttribute("scope","row")
-            th.textContent = i;
+            th.textContent = a;
             tr.appendChild(th)
             tr.appendChild(td1)
             tr.appendChild(td2)
@@ -121,10 +123,10 @@ Your Cart
             tr.appendChild(td5) 
 
             document.getElementById("view").appendChild(tr)   
-            i=i+1
+            a=a+1
 
         }
-        
+        console.log(requestData)
         const button = document.querySelectorAll(".cancel")
         button.forEach((btn)=>{
             btn.addEventListener('click',function(e){

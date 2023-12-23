@@ -47,7 +47,8 @@ INSTALLED_APPS = [
      'rest_framework.authtoken',
     'Home',
     'accounts',
-    'Posti'
+    'Posti',
+    'Api'
 ]
 
 MIDDLEWARE = [

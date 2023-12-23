@@ -4,6 +4,7 @@ from Posti.models import Customer,Ordermodel
 class OrdermodelInline(admin.TabularInline):
     model = Ordermodel
     extra = 0
+    
 
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [('Customer Info', {'fields': ['customer']}), ]

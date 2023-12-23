@@ -15,12 +15,10 @@ def ido(request):
 
 class Login(View):
     def get(self,request):
-        
         return render(request,"authentication/login.html")
     
     def post(self,request,*args, **kwargs):
         form = LoginForm(request.POST)
-        print(form)
         if form.is_valid():
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
@@ -44,11 +42,13 @@ class Signup(View):
                 email=form.cleaned_data.get("email"),
                 username=form.cleaned_data.get("username"),
             )
-            customer = Customer.objects.create(customer=user.email)
             user.set_password(form.cleaned_data.get("password"))
             user.save()
+            # customer = Customer.objects.create(customer=user.email)
             auth_user = authenticate(request,username = form.cleaned_data.get("email"),password = form.cleaned_data.get("password"))
             login(request, user)
+            customer = Customer.objects.create(customer = request.user)
+            customer.save()
             return redirect("/")
             
         else:
