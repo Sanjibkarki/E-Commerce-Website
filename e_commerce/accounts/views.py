@@ -7,10 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from accounts.models import User
 from Posti.models import Customer
+from django.contrib.auth.views import PasswordResetConfirmView 
 
-
-def ido(request):
-    return render(request,"ui.html")
 @method_decorator(cache_control(no_store = True,no_cache=True), name='dispatch')
 
 class Login(View):

@@ -13,5 +13,6 @@ class Userserializer(serializers.Serializer):
     
     def get_path(self,obj):
         request = self.context.get('request')
+        
         mydata = obj.ordermodel_set.all()
         return UserLinkedInline(mydata,many = True,context = {'request':request}).data

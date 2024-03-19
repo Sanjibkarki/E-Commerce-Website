@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-m-u1da@bs9qj81r09af9_0zrdoq7*zdrur8skbkl!$_(_u=-p@
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "sanjeebkarki64@gmail.com"
+EMAIL_HOST_PASSWORD = "xdlw vpdt kzao ojyz "
 
 # Application definition
 REST_FRAMEWORK = {
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
      'rest_framework.authtoken',
+     'add_product',
     'Home',
     'accounts',
     'Posti',
@@ -57,6 +64,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    # 'Home.custom_RestrictMiddleware.CustomRestrictAuthentication',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -64,7 +72,7 @@ MIDDLEWARE = [
 CORS_URLS_REGEX = r"^/api/.*"
 ROOT_URLCONF = 'e_commerce.urls'
 AUTH_USER_MODEL = "accounts.User"
-LOGIN_URL = 'login'
+LOGIN_URL = '/login'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

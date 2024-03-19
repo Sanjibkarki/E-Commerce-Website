@@ -3,23 +3,28 @@ from django.views import View
 from django.db.models import Q
 from itertools import chain
 from Home.models import Upperwear,Lowerwear,Footwear
-from Posti.models import Ordermodel,Customer
+from Posti.models import Ordermodel,Customer,Product
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from Api.serializers import MyModelSerializer 
+from Posti.form import UploadForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from rest_framework.authtoken.models import Token
-
+from django.http import JsonResponse
+import json
 
 class Views(View):
     def get(self,request):
         try:
-            token, created = Token.objects.get_or_create(user=request.user)
-            get_customer = Customer.objects.get(customer = request.user)
+            if request.user.is_authenticated:
+                get_customer = Customer.objects.get(customer = request.user)
         except Customer.DoesNotExist:
             return render(request,"front_pages/view.html")
-        return render(request,"front_pages/view.html",{'id':get_customer.id,'token':token})
+        return render(request,"front_pages/view.html")
+
 
 def Prod_detail(request,product_slug):
     try:
@@ -34,6 +39,8 @@ def Prod_detail(request,product_slug):
                 product = None 
     return render(request,"front_pages/product_detail.html",{"product":product})
 
+
+    return render(request,'front_pages/add.html',{'form':form})
 # def delete(request):
 #     c = Customer.objects.get(customer = "sanjibkarki64@gmail.com")
 #     # d = c.inlinemodel_set.all()
@@ -72,7 +79,9 @@ class prod_search(View):
              
         context = { 'results': results}
         return render(request, 'front_pages/search.html', context)
-    
+
+
+     
 # def prod_search(request,query = None):
 #     if request.method == "GET":
 #         

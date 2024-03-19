@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Posti.models import Customer,Ordermodel
+from Posti.models import Customer,Ordermodel,Product
 
 class OrdermodelInline(admin.TabularInline):
     model = Ordermodel
@@ -11,3 +11,4 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [OrdermodelInline]
 
 admin.site.register(Customer, ProductAdmin)
+admin.site.register(Product)
