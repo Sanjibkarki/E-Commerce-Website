@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers, serializers
-from Api.views import sessiondata
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -17,12 +17,15 @@ class Login(View):
     
     def post(self,request,*args, **kwargs):
         form = LoginForm(request.POST)
+        
         if form.is_valid():
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
             user  = authenticate(request,email=email,password = password)
             if user is not None:
                 login(request,user)
+                customer,created = Customer.objects.get_or_create(customer = request.user)
+                
                 return redirect("home")
             else:
                 return redirect("login")
@@ -45,7 +48,6 @@ class Signup(View):
             # customer = Customer.objects.create(customer=user.email)
             auth_user = authenticate(request,username = form.cleaned_data.get("email"),password = form.cleaned_data.get("password"))
             login(request, user)
-            customer = Customer.objects.create(customer = request.user)
             customer.save()
             return redirect("/")
             

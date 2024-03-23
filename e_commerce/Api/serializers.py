@@ -6,6 +6,6 @@ class MyModelSerializer(serializers.ModelSerializer):
     Date_of_order = serializers.DateTimeField(source= 'date',read_only=True,format='%Y-%m-%d T-%H:%M:%S')
     class Meta:
         model = Ordermodel
-        fields = ['PName','PPrice','Size','Quantity','Info','Date_of_order']
+        fields = ['PName','PPrice','Size','Quantity','Info','oredered','Date_of_order']
 
     

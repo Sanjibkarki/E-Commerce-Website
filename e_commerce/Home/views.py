@@ -25,8 +25,8 @@ class Index(View):
             'product2': lowerwear,
             'product3': footwear,
             'token': token,
+            'user_is_authenticated':request.user.is_authenticated
         }
-
         return render(request, "index.html", context)
     
 

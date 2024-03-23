@@ -311,70 +311,22 @@
             </div>
             
             </header>
-            <script>
-                var token = "{{token}}";
-                localStorage.setItem("token",token);
-            </script>
-        
-        {% endblock %}
-       
-        {% block footer %}
-        <script>
-            var token = "{{token}}"
-            localStorage.setItem('token',token)
-            /*function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = cookies[i].trim();;
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-            */
-                /*var i = 0;
-                const items = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                const json = JSON.parse(localStorage.getItem(key));
-                
-                items.push({key,position: json.position, data: json.item });
-                
-            }
-            items.sort((a, b) => a.position - b.position);
-            for (const item of items){
-                i = i + (+item.data.quantity)
-            }
-            */
             
-            fetch('http://127.0.0.1:8000/api/session/',{
-                credentials: "same-origin",
-                method : 'GET',
-                headers: { 
-                    "Accept": "application/json",
-                    'Content-Type': 'application/json',   
-                },
-            })
-            .then(response=>
-                response.json()
-            )
-            .then(data => {
-                    var data = data.cartItem
-                    var object = Object.values(data)
-                    var length = 0
-                    for(let i = 0;i<object.length;i++){
-                        length = length + (+object[i]["quantity"])
-                    }
-                    document.getElementById("number").textContent = length 
-            })  
+        <script>
+            localStorage.setItem('token', "{{token}}")
         </script>
+        {% endblock %}
+        
         <footer id="footer">
+            
+            {% if request.user.is_authenticated %}
+                <script src="{% static 'script/index.js' %}"></script>
+            
+            {% else %}
+                <script src="{% static 'script/index_1.js' %}"></script>
+
+            {% endif %}
+                
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
@@ -434,7 +386,7 @@
 			</div>
 
 		</section>
-        {% endblock  %}
+        
             
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

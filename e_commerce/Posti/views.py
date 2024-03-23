@@ -23,7 +23,7 @@ class Views(View):
                 get_customer = Customer.objects.get(customer = request.user)
         except Customer.DoesNotExist:
             return render(request,"front_pages/view.html")
-        return render(request,"front_pages/view.html")
+        return render(request,"front_pages/view.html",{"is_authenticated":request.user.is_authenticated})
 
 
 def Prod_detail(request,product_slug):
