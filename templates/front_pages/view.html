@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+Your Cart
+{% endblock %}
+
+{% block body %}
+<p id="text" style="text-align: center; font-size: 100px;"></p>
+<div class="container" style="height: max-content;" id="title">
+    <center><h1 id="title">View your Cart</h1></center>
+    <div class="form-item">
+
+        <table class="table view-items" id="view">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody id="view">
+
+            </tbody>
+        </table>
+        <button class="btn btn-primary" id="click">place your order</button>
+
+    </div>
+
+</div>
+
+{% if request.user.is_authenticated %}
+<script src="{% static 'script/view.js' %}"></script>
+
+{% else %}
+<script src="{% static 'script/view_1.js' %}"></script>
+
+{% endif %}
+    
+    
+{% endblock %}

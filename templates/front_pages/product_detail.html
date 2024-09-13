@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+Product-Detail
+{% endblock %}
+
+{% block body %}
+<style>
+        
+        .image-box{
+            height: 400px;
+        }
+        .image-box img{
+            width: 100%;
+            height: 100%;
+        }
+        .container .product-details{
+            background-color: orange;
+            width: 50%;
+            height: 400px;
+            padding-left: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+        }
+        .box{
+            flex: 1;
+            box-sizing: border-box;
+            
+        }
+        @media (max-width: 1000px) and (min-width: 400px){
+            .container{
+                flex-wrap: wrap;
+            }
+            .container .product-details{
+                
+                padding-left: 20px;
+            }
+            
+        }
+    </style>
+
+<div class="container"
+    style="display: flex; align-items:center; justify-content: center; margin: 20px 0">
+    <div class="image-box">
+        <img src="/media/{{product.image}}" alt="...">
+    </div>
+    <div class="product-details">
+        <div class="box">
+            <h2 id="name">{{product.product_name}}</h2>
+        </div>
+        <div class="box" id="review">
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-regular fa-heart"></i>
+        </div>
+        <div class="box" style="display: flex;"><span>$</span><div style="display: flex; flex-direction:column;"><h5 id="price">{{product.price}}</h5><h5 id="price">s</h5></div></div>
+        <div class="box" style="line-height: 2px;"><p>size</p>
+            <select id="size">
+                <option value="XXL">XXL</option>
+                <option value="XL">XL</option>
+                <option value="L" selected>L</option>
+                <option value="M">M</option>
+                <option value="S">S</option>
+            </select>
+        </div>
+        <div class="box" style="line-height: 2px;">
+            <div class="s" style="display: flex;">
+                <div class="lastbox" style="width: 100px;">
+                    <p>Qty</p><input id="quantity" type="number" max="5" min="1"
+                      value="1"  style="width: 50px;">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success add" id="add">Add
+                        to cart</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% if request.user.is_authenticated %}
+<script src="{% static 'script/prod.js' %}"></script>
+
+{% else %}
+<script src="{% static 'script/prod_1.js' %}"></script>
+
+{% endif %}
+{% endblock %}
