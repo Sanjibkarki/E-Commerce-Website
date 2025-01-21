@@ -10,5 +10,8 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = [('Customer Info', {'fields': ['customer']}), ]
     inlines = [OrdermodelInline]
 
+
+
+
 admin.site.register(Customer, ProductAdmin)
 admin.site.register(Product)

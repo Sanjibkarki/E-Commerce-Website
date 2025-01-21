@@ -108,6 +108,6 @@ function buttons() {
 }
 
 setTimeout(buttons, 1000);
-document.getElementById('click').addEventListener('click',()=>{
+document.getElementById('order').addEventListener('click',()=>{
     window.location.href = '/login'
 })

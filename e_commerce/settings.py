@@ -25,14 +25,21 @@ SECRET_KEY = 'django-insecure-m-u1da@bs9qj81r09af9_0zrdoq7*zdrur8skbkl!$_(_u=-p@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 ALLOWED_HOSTS = []
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "sanjeebkarki64@gmail.com"
-EMAIL_HOST_PASSWORD = "xdlw vpdt kzao ojyz "
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 # Application definition
 REST_FRAMEWORK = {
@@ -85,6 +92,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Home.context.auth'
             ],
         },
     },
@@ -99,11 +107,11 @@ WSGI_APPLICATION = 'e_commerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER' : 'postgres',
-        'PASSWORD': 'admin123',
-        'HOST' : 'localhost',
-        'PORT' : '5432'
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 

@@ -49,7 +49,14 @@
                         </a>
                         <div class="dropdown-menu"
                             aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" style="color: red;"  href="/form">Add <span class="sr-only">(admin only)</span></a>
+                            
+                            {% if admin %}
+                                <a class="dropdown-item" style="color: red;"  href="/form">Add <span class="sr-only">(admin only)</span></a>
+                                <a class="dropdown-item" style="color: red;"  href="/form/order">ViewOrders <span class="sr-only">(admin only)</span></a>
+                                <a class="dropdown-item" style="color: red;"  href="/form/manage">Manage <span class="sr-only">(admin only)</span></a>
+                                
+                            {% endif %}
+                                
                             <a class="dropdown-item" style="color: black;" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" style="color: black;" href="/view">Something else

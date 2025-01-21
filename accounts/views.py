@@ -48,7 +48,6 @@ class Signup(View):
             # customer = Customer.objects.create(customer=user.email)
             auth_user = authenticate(request,username = form.cleaned_data.get("email"),password = form.cleaned_data.get("password"))
             login(request, user)
-            customer.save()
             return redirect("/")
             
         else:

@@ -14,6 +14,66 @@ from django.views import View
 from django.http import JsonResponse
 from Posti.models import Ordermodel,Customer
 from rest_framework.exceptions import AuthenticationFailed
+from time import sleep
+from django.core.mail import send_mail
+from celery import shared_task
+
+@shared_task()
+def send_feedback_email_task(number,obj):
+    message = "Contact Detail is number\nOrders are:\n"
+    for i in obj:
+        message += f"- {i.PName} {i.PPrice} {i.Size} {i.Quantity}\n"
+    send_mail(
+        "Order Details",
+        message,"sanjeeb123ui@gmail.com",
+        ["sanjeevkarki729@gmail.com",],
+        fail_silently=False,
+    )
+    
+class CreateApi(generics.ListCreateAPIView):
+    authentication_classes = [authentication.SessionAuthentication,authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Ordermodel.objects.all()
+    serializer_class = MyModelSerializer
+    
+    def get_queryset(self,*args,**kwargs):
+        id = Customer.objects.get(customer = self.request.user)       
+        qs = super().get_queryset(*args,**kwargs)
+        request = self.request
+        user = request.user
+        if not user.is_authenticated:
+            return product.objects.none()
+        return qs.filter(product = id)
+    
+    def perform_create(self,serializer):
+        id = Customer.objects.get(customer = self.request.user)       
+        if serializer.is_valid():
+            serializer.save(product = id,oredered = True)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def post(self, request, *args, **kwargs):
+        get = request.data['number']
+        token = request.headers.get('Authorization')
+
+        if not token:
+            raise AuthenticationFailed('Token not provided')
+    
+        try:
+            token = token.split(' ')[1]
+            user = authentication.TokenAuthentication().authenticate_credentials(token)
+        except AuthenticationFailed:
+            raise AuthenticationFailed('Invalid token')
+        try:
+            
+            obj = Ordermodel.objects.filter(product__customer=request.user)
+            send_feedback_email_task(get,obj)
+            obj.delete()
+            return Response({"Data":"Method Post Done"})
+        except Ordermodel.DoesNotExist:
+            return Response({'error': f'Object with ID {obj_id} not found'}, status=status.HTTP_404_NOT_FOUND)
+    
 class api(APIView):
     authentication_classes = [authentication.SessionAuthentication,authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -102,7 +162,7 @@ class sessiondata_delete(View):
         if request.user.is_authenticated:
             try:
                 cartItem = Ordermodel.objects.filter(product__customer = request.user)
-                delete_item = cartItem.get(PName = slug)
+                delete_item = cartItem.get(PName = slug,oredered = False)
                 delete_item.delete()
             except Ordermodel.DoesNotExist:
                 cartItem = None    
@@ -116,49 +176,7 @@ class sessiondata_delete(View):
         return JsonResponse({"Data":"Data Not Available"},safe=False)
         
      
-class CreateApi(generics.ListCreateAPIView):
-    authentication_classes = [authentication.SessionAuthentication,authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Ordermodel.objects.all()
-    serializer_class = MyModelSerializer
-    
-    def get_queryset(self,*args,**kwargs):
-        id = Customer.objects.get(customer = self.request.user)       
-        qs = super().get_queryset(*args,**kwargs)
-        request = self.request
-        user = request.user
-        if not user.is_authenticated:
-            return product.objects.none()
-        return qs.filter(product = id)
-    
-    def perform_create(self,serializer):
-        id = Customer.objects.get(customer = self.request.user)       
-        if serializer.is_valid():
-            serializer.save(product = id,oredered = True)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-    def post(self, request, *args, **kwargs):
-        token = request.headers.get('Authorization')
 
-        if not token:
-            raise AuthenticationFailed('Token not provided')
-    
-        try:
-            token = token.split(' ')[1]
-            user = authentication.TokenAuthentication().authenticate_credentials(token)
-        except AuthenticationFailed:
-            raise AuthenticationFailed('Invalid token')
-        try:
-            obj = Ordermodel.objects.filter(product__customer=request.user)
-            for i in obj:
-                i.oredered = True
-                i.save()
-            return Response({"Data":"Method Post Done"})
-        except Ordermodel.DoesNotExist:
-            return Response({'error': f'Object with ID {obj_id} not found'}, status=status.HTTP_404_NOT_FOUND)
-    
     
     #     return Response({'message': 'Objects updated successfully'}, status=status.HTTP_200_OK)
 class AddCartApi(generics.ListCreateAPIView):
@@ -197,7 +215,8 @@ class AddCartApi(generics.ListCreateAPIView):
         except AuthenticationFailed:
             raise AuthenticationFailed('Invalid token')
         try:
-            matching = Ordermodel.objects.get(PName=data.get("PName"))
+            matching = Ordermodel.objects.get(product=Customer.objects.get(customer=request.user),PName=data.get("PName"),oredered=False)
+            
             matching.Quantity += int(data.get("Quantity"))
             matching.save()
             return Response({"data": "dsad"})

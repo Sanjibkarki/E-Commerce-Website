@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block body %}
+     
+{% for i in all %}
+<div class="col-xs-3 col-sm-3 col-md-3 set-grid">
+    <div class="card" style="width: 16rem;">
+       
+        <img src="/media/{{i.image}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div class="row">
+                <div class="col"><a href="{% url 'product_detail' i.product_name %}" class="card-title" id="product_name_{{i.id}}_1">{{i.product_name}}</a></div>
+                <div class="col" style="text-align: right; color: yellow;"  id = "product_price_{{i.id}}_1">{{i.price}}</div>
+                <button onclick="deleteProduct('{{ i.product_name }}')">Delete?</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script>
+    const deleteProduct = async (name) => {
+        try {
+            const response = await fetch(`/form/manage?id=${name}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCsrfToken(),
+                },
+                 
+            });
+    
+            if (response.ok) {
+                location.reload()
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    };
+    
+    // Example function to retrieve CSRF token from cookies
+    const getCsrfToken = () => {
+        const name = 'csrftoken';
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const trimmed = cookie.trim();
+            if (trimmed.startsWith(name + '=')) {
+                return trimmed.substring(name.length + 1);
+            }
+        }
+        return '';
+    };
+    
+    
+</script>
+{% endblock %}
+   
+

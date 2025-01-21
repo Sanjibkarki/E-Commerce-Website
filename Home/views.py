@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from accounts.models import User
-
 from .models import Upperwear,Lowerwear,Footwear
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control

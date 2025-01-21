@@ -127,9 +127,9 @@ for (let i = 0; i < number; i++) {
 }
 items.sort((a, b) => a.position - b.position);
 */
-function cart() {
-    document.getElementById('click').addEventListener('click', () => {
+    document.getElementById('order').addEventListener('click', () => {
         var token = localStorage.getItem('token')
+        const a = prompt("Enter Your Number")
         fetch('http://127.0.0.1:8000/api/create/', {
             credentials: "same-origin",
             method: 'POST',
@@ -139,14 +139,11 @@ function cart() {
                 'Content-Type': 'application/json',
                 "X-CSRFToken": getCookie("csrftoken"),
             },
+            body: JSON.stringify({"number": a})
         })
 
-
-        alert("Thank you for visiting us!!")
     })
 
-}
-setTimeout(cart, 1000)
 
 /*
     let a =0;
