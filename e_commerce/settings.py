@@ -18,18 +18,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
+import os
+from dotenv import load_dotenv
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m-u1da@bs9qj81r09af9_0zrdoq7*zdrur8skbkl!$_(_u=-p@'
+SECRET_KEY = os.getenv("SECRETKEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-import os
-from dotenv import load_dotenv
+
 load_dotenv()
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 EMAIL_HOST = 'smtp.gmail.com'
@@ -110,8 +110,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

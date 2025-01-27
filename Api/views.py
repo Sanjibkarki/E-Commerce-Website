@@ -26,7 +26,7 @@ def send_feedback_email_task(number,obj):
     send_mail(
         "Order Details",
         message,"sanjeeb123ui@gmail.com",
-        ["sanjeevkarki729@gmail.com",],
+        ["request.user.email",],
         fail_silently=False,
     )
     

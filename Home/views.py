@@ -18,7 +18,7 @@ class Index(View):
         upperwear = Upperwear.objects.values().all()
         lowerwear = Lowerwear.objects.values().all()
         footwear = Footwear.objects.values().all()
-
+        print(upperwear)
         context = {
             'product': upperwear,
             'product2': lowerwear,
