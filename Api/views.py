@@ -20,13 +20,13 @@ from celery import shared_task
 
 @shared_task()
 def send_feedback_email_task(number,obj):
-    message = "Contact Detail is number\nOrders are:\n"
+    message = f"Contact Detail is {number}\nOrders are:\n"
     for i in obj:
         message += f"- {i.PName} {i.PPrice} {i.Size} {i.Quantity}\n"
     send_mail(
         "Order Details",
         message,"sanjeeb123ui@gmail.com",
-        ["request.user.email",],
+        ["sanjeevkarki729@gmail.com",],
         fail_silently=False,
     )
     

@@ -15,7 +15,7 @@ function getCookie(name) {
     return cookieValue;
 }
 function itemfetch() {
-    fetch('http://127.0.0.1:8000/api/list/', {
+    fetch('/api/list/', {
         credentials: "same-origin",
         method: 'GET',
         headers: {
@@ -53,7 +53,7 @@ document.getElementById("add").addEventListener('click', () => {
     }
     const item = { "PName": name, "PPrice": price, "Size": size, "Quantity": quantity };
 
-    fetch('http://127.0.0.1:8000/api/addcart/', {
+    fetch('/api/addcart/', {
         credentials: "same-origin",
         method: 'POST',
         headers: {

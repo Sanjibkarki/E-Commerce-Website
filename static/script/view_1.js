@@ -14,7 +14,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-fetch('http://127.0.0.1:8000/api/session/', {
+fetch('/api/session/', {
     
     credentials: "same-origin",
     method: 'GET',
@@ -84,7 +84,7 @@ function buttons() {
         btn.addEventListener('click', function (e) {
             const element = e.target.parentElement.parentElement;
             var PName = element.childNodes[1].textContent;
-            fetch(`http://127.0.0.1:8000/api/session_delete/${PName}`, {
+            fetch(`/api/session_delete/${PName}`, {
                 credentials: "same-origin",
                 method: 'DELETE',
                 headers: {

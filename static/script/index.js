@@ -46,7 +46,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-fetch('http://127.0.0.1:8000/api/list/', {
+fetch('/api/list/', {
     credentials: "same-origin",
     method: 'GET',
     headers: {

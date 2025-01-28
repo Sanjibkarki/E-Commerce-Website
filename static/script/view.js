@@ -17,7 +17,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-fetch('http://127.0.0.1:8000/api/list/', {
+fetch('/api/list/', {
     credentials: "same-origin",
     method: 'GET',
     headers: {
@@ -86,7 +86,7 @@ function buttons() {
         btn.addEventListener('click', function (e) {
             const element = e.target.parentElement.parentElement;
             var PName = element.childNodes[1].textContent;
-            fetch(`http://127.0.0.1:8000/api/session_delete/${PName}`, {
+            fetch(`/api/session_delete/${PName}`, {
                 credentials: "same-origin",
                 method: 'DELETE',
                 headers: {
@@ -130,7 +130,7 @@ items.sort((a, b) => a.position - b.position);
     document.getElementById('order').addEventListener('click', () => {
         var token = localStorage.getItem('token')
         const a = prompt("Enter Your Number")
-        fetch('http://127.0.0.1:8000/api/create/', {
+        fetch('/api/create/', {
             credentials: "same-origin",
             method: 'POST',
             headers: {

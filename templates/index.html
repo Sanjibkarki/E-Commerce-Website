@@ -117,14 +117,17 @@
                 data-ride="carousel">
                 <div class="carousel-inner upper-wear">
                     <h1>UPPER</h1>
-                  
-        
+                
                     <div class="carousel-item active">
+                        
+                        {% if product %}
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">
                             <div class="card" style="width: 16rem;">
                                 <img src="/media/{{product.0.image}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <div class="row">
+                                        <div class="col"><a href="{% url 'product_detail' product.0.product_name %}" class="card-title" id="product_name_{{product.0.id}}_1">{{product.0.product_name}}</a></div>
+
                                         <div class="col" style="text-align: right; color: yellow;"  id = "product_price_{{product.0.id}}_1">{{product.0.price}}</div>
                                     </div>
                                 
@@ -139,6 +142,9 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                            
+                        
         
                         {% for i in product|slice:"1:" %}
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">
@@ -185,11 +191,14 @@
                 <div class="carousel-inner lower-wear ">
                     <h1>LOWER</h1>
                     <div class="carousel-item active">
+                        
+                        {% if product2 %}
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">
                             <div class="card" style="width: 16rem;">
                                 <img src="/media/{{product2.0.image}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <div class="row">
+                                        <div class="col"><a href="{% url 'product_detail' product2.0.product_name %}" class="card-title" id="product_name_{{product2.0.id}}_2">{{product2.0.product_name}}</a></div>
         
                                         <div class="col" style="text-align: right; color: yellow;"  id = "product_price_{{product2.0.id}}_2">{{product2.0.price}}</div>
                                     </div>
@@ -204,6 +213,9 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                            
+                       
         
                         {% for i in product2|slice:"1:" %}
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">
@@ -251,13 +263,16 @@
                 <div class="carousel-inner foot-wear">
                     <h1>FOOT-WEAR</h1>
                     <div class="carousel-item active">
+                        
+                        {% if product3 %}
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">
                             <div class="card" style="width: 16rem;">
                                 <img src="/media/{{product3.0.image}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                 
                                     <div class="row">
-        
+                                        <div class="col"><a href="{% url 'product_detail' product3.0.product_name %}" class="card-title" id="product_name_{{product3.0.id}}_3">{{product3.0.product_name}}</a></div>
+
                                         <div class="col" style="text-align: right; color: yellow;"  id = "product_price_{{product3.0.id}}_3">{{product3.0.price}}</div>
                                     </div>
                                     
@@ -271,7 +286,8 @@
                                 </div>
                             </div>
                         </div>
-        
+                        {% endif %}
+                            
                         {% for i in product3|slice:"1:" %}
                        
                         <div class="col-xs-3 col-sm-3 col-md-3 set-grid">

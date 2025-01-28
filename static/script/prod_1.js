@@ -28,7 +28,7 @@ document.getElementById("add").addEventListener('click', () => {
     }
     const item = { "PName": name, "PPrice": price, "Size": size, "Quantity": quantity };
 
-    fetch('http://127.0.0.1:8000/api/session/', {
+    fetch('/api/session/', {
         method: 'POST',
         headers: {
             "Accept": "application/json",
@@ -41,7 +41,7 @@ document.getElementById("add").addEventListener('click', () => {
 
 })
 function itemfetch() {
-    fetch('http://127.0.0.1:8000/api/session/', {
+    fetch('/api/session/', {
         credentials: "same-origin",
         method: 'GET',
         headers: {
