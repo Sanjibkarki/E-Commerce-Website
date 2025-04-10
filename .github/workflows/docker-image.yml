@@ -28,6 +28,6 @@ jobs:
       with:
         context: .  # Use the root of the repo as the context
         push: true  # Push the image to Docker Hub
-        tags: ${{ secrets.DOCKER_USERNAME }}/E_com:latest  # Use Docker Hub username and tag
+        tags: ${{ secrets.DOCKER_USERNAME }}/ecom:latest  # Use Docker Hub username and tag
         platforms: linux/amd64,linux/arm64  # Specify platforms to build for
 
