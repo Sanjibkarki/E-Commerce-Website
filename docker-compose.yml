@@ -34,9 +34,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER={{secrets.postgresuser}}
-      - POSTGRES_PASSWORD={{secrets.postgrespassword}}
-      - POSTGRES_DB={{secrets.postgresdb}}
+      - POSTGRES_USER={{secrets.POSTGRESUSER}}
+      - POSTGRES_PASSWORD={{secrets.POSTGRESPASSWORD}}
+      - POSTGRES_DB={{secrets.POSTGRESDB}}
     ports:
       - "5432:5432"
 volumes:
