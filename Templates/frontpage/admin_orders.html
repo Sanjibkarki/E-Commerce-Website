@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admin Orders</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="container py-5">
+    <h3>Orders</h3>
+    {% if orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Guest ID</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user }}</td>
+            <td>{{ order.guest_id }}</td>
+            <td>Rs. {{ order.total }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+            <td><a class="btn btn-sm btn-primary" href="{% url 'admin-order-detail' order.id %}">View</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="text-muted">No orders found.</div>
+    {% endif %}
+    <a href="/admin/" class="btn btn-secondary mt-3">Open Django admin</a>
+  </div>
+</body>
+</html>

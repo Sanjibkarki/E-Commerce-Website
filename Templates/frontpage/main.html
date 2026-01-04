@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Welcome to HamroStore{% endblock %}
+
+{% block body %}
+<!-- Electronics Section -->
+        <section class="py-5">
+            <div class="container">
+                <h3 class="section-title mb-4">Electronics</h3>
+                <div class="row" id="electronics-container">
+                    <div class="col-12 text-center">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fashion Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h3 class="section-title mb-4">Fashion</h3>
+                <div class="row" id="fashion-container">
+                    <div class="col-12 text-center">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accessories Section -->
+        <section class="py-5">
+            <div class="container">
+                <h3 class="section-title mb-4">Accessories</h3>
+                <div class="row" id="accessories-container">
+                    <div class="col-12 text-center">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wearables Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h3 class="section-title mb-4">Wearables</h3>
+                <div class="row" id="wearables-container">
+                    <div class="col-12 text-center">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Computers Section -->
+        <section class="py-5">
+            <div class="container">
+                <h3 class="section-title mb-4">Computers</h3>
+                <div class="row" id="computers-container">
+                    <div class="col-12 text-center">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        Loading...
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="{% static 'script/page.clean.js' %}"></script>
+{% endblock %}

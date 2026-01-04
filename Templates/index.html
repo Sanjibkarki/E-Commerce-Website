@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}HamroStore{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/41177e3fce.js"
+            crossorigin="anonymous"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+
+    <body>
+
+        <!-- ================= NAVBAR ================= -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'image/download.png' %}" width="70">
+                </a>
+
+                <button class="navbar-toggler" data-toggle="collapse"
+                    data-target="#nav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="nav">
+
+                    <!-- LEFT MENU -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+
+                        <!-- DROPDOWN -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                id="shopDropdown"
+                                role="button" data-toggle="dropdown">
+                                Shop
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Tops</a>
+                                <a class="dropdown-item" href="#">Bottoms</a>
+                                <a class="dropdown-item" href="#">Footwear</a>
+
+                                {% if request.user.is_staff %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger"
+                                    href="{% url 'add_product' %}">Add Product</a>
+                                <a class="dropdown-item text-danger"
+                                    href="/form/manage">Manage</a>
+                                {% endif %}
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/view">Cart</a>
+                        </li>
+                        
+                    </ul>
+
+                    <!-- SEARCH -->
+                    <form class="form-inline mr-3" action="{% url 'product_search' %}" method="get">
+                        <input class="form-control mr-2" name="query"
+                            placeholder="Search products">
+                        <button class="btn btn-outline-light" type="submit">Search</button>
+                    </form>
+
+                    <!-- USER DROPDOWN -->
+                    {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle"
+                            data-toggle="dropdown">
+                            {{ request.user.username }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            {% if request.user.is_admin %}
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="orders">Orders</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger"
+                                href="accounts/logout">Logout</a>
+                            {% else %}
+                            <a class="dropdown-item text-danger"
+                                href="accounts/logout">Logout</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="accounts/login" class="btn btn-light mr-2">Login</a>
+                    <a href="accounts/signup" class="btn btn-warning">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <!-- ================= BODY ================= -->
+        {% block body %}
+
+        
+        {% endblock %}
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="bg-dark text-light pt-5">
+            <div class="container text-center">
+                <p class="small mb-1">HamroStore – Django E-Commerce Project</p>
+                <p class="small mb-0">© 2025 HamroStore</p>
+            </div>
+        </footer>
+
+        <!-- JS -->
+        
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+
+    </body>
+</html>
