@@ -29,21 +29,56 @@ function renderProducts(products, containerId) {
 
         html += `
             <div class="col-md-4 col-lg-3 mb-4">
-                <a class="card-link" onclick="showProductDetail('${product.uuid}')" data-uuid="${product.uuid}">
-                    <div class="product-card">
+                <div class="product-card">
+
+                    <a class="card-link" onclick="showProductDetail('${product.uuid}')">
                         <img src="${imgSrc}" class="img-fluid" onerror="this.src='https://via.placeholder.com/260'">
-                        <div class="p-3">
-                            <h6>${product.Name}</h6>
-                            <span class="price-tag">Rs. ${parseFloat(product.Price).toFixed(2)}</span>
-                            <p class="small text-muted mt-2">Qty: ${product.Quantity}</p>
-                        </div>
+                    </a>
+
+                    <div class="p-3">
+                        <h6>${product.Name}</h6>
+                        <span class="price-tag">Rs. ${parseFloat(product.Price).toFixed(2)}</span>
+                        <p class="small text-muted mt-2">Qty: ${product.Quantity}</p>
+
+                        <a href="/cart/" class="btn btn-sm btn-primary mt-2 w-100">
+                            View Cart
+                        </a>
                     </div>
-                </a>
+                </div>
             </div>
         `;
     });
 
     container.innerHTML = html;
+}
+async function showProductDetail(uuid) {
+    try {
+        // 👇 matches: path('products/<uuid:uuid>/')
+        const res = await fetch(`api/products/${uuid}/`);
+
+        if (!res.ok) throw new Error("Product fetch failed");
+
+        const product = await res.json();
+
+        document.getElementById("detailTitle").textContent = product.Name;
+        document.getElementById("detailImage").src = product.Image || "https://via.placeholder.com/400";
+        document.getElementById("detailDescription").textContent =
+            product.Description || "No description available.";
+        document.getElementById("detailPrice").textContent =
+            "Rs. " + parseFloat(product.Price).toFixed(2);
+        document.getElementById("detailQty").textContent = product.Quantity;
+
+        // store product uuid for cart
+        document.getElementById("detailProductId").value = product.uuid;
+
+        const modal = new bootstrap.Modal(document.getElementById("productDetailModal"));
+        modal.show();
+
+
+    } catch (err) {
+        console.error(err);
+        alert("Could not load product details.");
+    }
 }
 
 function safeSetContainerError(containerId, message) {
@@ -85,7 +120,7 @@ async function loadProductsByCategory() {
 }
 
 // Expose helpers for other scripts
-window.showProductDetail = window.showProductDetail || function(uuid) {
+window.showProductDetail = window.showProductDetail || function (uuid) {
     console.warn('showProductDetail called before definition:', uuid);
 };
 
