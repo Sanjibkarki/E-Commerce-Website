@@ -1,14 +1,13 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=recommendation.settings
 
 WORKDIR /app
 
-# Install PostgreSQL development tools
-RUN apt-get update && apt-get install -y libpq-dev gcc
-
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "E-Commerce-Website.wsgi:application", "--bind", "0.0.0.0:8000"]
-
+CMD ["gunicorn", "recommendation.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120"]

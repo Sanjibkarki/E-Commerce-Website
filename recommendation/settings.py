@@ -23,10 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ym93_f=m4*kjpd9l2plo5qw#+eb(0u9uz(n0z193jbu=#(ro^0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = [
+    '192.168.1.7',
+    'localhost',
+    '127.0.0.1',
+    'web',
+    'e-commerce-website-web-1',   # Gunicorn container name
+    'e-commerce-website-nginx-1', # Nginx container name
+]
 AUTH_USER_MODEL = "Accounts.User"
 LOGIN_URL = '/login'
 # Application definition
@@ -122,8 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 import os
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT =  '/app/media'
 MEDIA_URL = '/media/'
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/static'
