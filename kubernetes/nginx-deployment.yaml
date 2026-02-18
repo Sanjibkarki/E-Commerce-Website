@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+          - containerPort: 80
+          - containerPort: 443
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/conf.d/nginx.conf
+            subPath: nginx.conf
+          - name: certs
+            mountPath: /etc/certs
+          - name: static-volume
+            mountPath: /app/static
+          - name: media-volume
+            mountPath: /app/media
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+        - name: certs
+          hostPath:
+            path: /etc/nginx/certs   # must exist on worker node
+        - name: static-volume
+          hostPath:
+            path: /app/static
+        - name: media-volume
+          hostPath: 
+            path: /app/media
+
+

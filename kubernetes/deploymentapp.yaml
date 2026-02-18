@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-web
+  template:
+    metadata:
+      labels:
+        app: django-web
+    spec:
+      containers:
+      - name: django
+        image: sanjeeb3334/django_web:latest
+        ports:
+          - containerPort: 8000
+        volumeMounts:
+          - name: static-volume
+            mountPath: /app/static
+          - name: media-volume
+            mountPath: /app/media
+      volumes:
+        - name: static-volume
+          persistentVolumeClaim:
+            claimName: static-pvc
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: media-pvc
