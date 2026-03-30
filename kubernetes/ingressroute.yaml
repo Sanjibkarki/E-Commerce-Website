@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: my-app
+  namespace: sandbox
+
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`mobapp.hamropasal.tech`)
+      kind: Rule
+      services:
+        - name: djangoservice
+          port: 80
+  

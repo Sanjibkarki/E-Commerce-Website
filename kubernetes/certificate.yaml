@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mobapp-cert
+  namespace: sandbox
+spec:
+  secretName: mobapp-tls
+  dnsNames:
+    - mobapp.hamropasal.tech
+  issuerRef:
+    name: letsencrypt-prod
+    kind: Issuer
